@@ -76,8 +76,10 @@ class OutfitPairsController < ApplicationController
     first = params[:vote_first]
     puts params[:id]
     if (first)
+       if (@outfit_pair.first_votes == nil): @outfit_pair.first_votes = 0 end
        @outfit_pair.first_votes = @outfit_pair.first_votes + 1
     else
+       if (@outfit_pair.second_votes == nil): @outfit_pair.second_votes = 0 end
        @outfit_pair.second_votes = @outfit_pair.second_votes + 1
     end
 
