@@ -100,4 +100,10 @@ class OutfitPairsController < ApplicationController
       format.xml  { head :ok }
     end
   end
+  
+  def random
+    pairs = OutfitPair.all
+    @outfit_pair = pairs[rand(pairs.length)]
+    render :action => 'show'
+  end
 end
