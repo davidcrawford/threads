@@ -1,0 +1,43 @@
+#!/usr/bin/ruby
+
+require 'rubygems'
+require 'rest_client'
+require 'json'
+
+if File.exists?("uploadr.log") then
+  log = File.open("uploadr.log", "a+")
+  log.rewind
+else
+  log = File.new("uploadr.log", "w+")
+end
+
+logged = Array.new
+log.each { |line| 
+  logged << line.chomp
+}
+
+newfiles = Array.new
+
+app = RestClient::Resource.new 'http://deep-mist-88.heroku.com/outfit_pairs'
+
+Dir.foreach(".") { |file|
+  if file[/\.jpg$/] then
+    if logged.index(file) == nil then
+    logged.each { |existing|
+    	puts "adding pair #{file}, #{existing}"
+	RestClient.post "http://deep-mist-88.heroku.com/outfit_pairs", {:outfit_pair => { :first_image => file, :second_image => existing } }.to_json, :content_type => :json
+    }
+    newfiles.each { |existing|
+        puts "adding pair #{file}, #{existing}"
+	RestClient.post "http://deep-mist-88.heroku.com/outfit_pairs", {:outfit_pair => { :first_image => file, :second_image => existing } }.to_json, :content_type => :json
+    }
+    newfiles << file
+    end
+  end
+}
+
+newfiles.each { |newfile|
+    log.puts newfile
+}
+
+log.close
