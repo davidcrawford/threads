@@ -1,0 +1,26 @@
+<h1>Listing outfit_pairs</h1>
+
+<table>
+  <tr>
+    <th>First image</th>
+    <th>Second image</th>
+    <th>First votes</th>
+    <th>Second votes</th>
+  </tr>
+
+<% @outfit_pairs.each do |outfit_pair| %>
+  <tr>
+    <td><%=h outfit_pair.first_image %></td>
+    <td><%=h outfit_pair.second_image %></td>
+    <td><%=h outfit_pair.first_votes %></td>
+    <td><%=h outfit_pair.second_votes %></td>
+    <td><%= link_to 'Show', outfit_pair %></td>
+    <td><%= link_to 'Edit', edit_outfit_pair_path(outfit_pair) %></td>
+    <td><%= link_to 'Destroy', outfit_pair, :confirm => 'Are you sure?', :method => :delete %></td>
+  </tr>
+<% end %>
+</table>
+
+<br />
+
+<%= link_to 'New outfit_pair', new_outfit_pair_path %>

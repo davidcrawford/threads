@@ -1,0 +1,19 @@
+<h1>Which outfit is better?</h1>
+<div id="outfits">
+  <div id="pair">
+    <img src="/images/<%=h @outfit_pair.first_image %>" class="outfit first"/>
+    <img src="/images/<%=h @outfit_pair.second_image %>" class="outfit" />
+  </div>
+  <div id="voter">
+    <% form_tag('vote') do %>
+      <%= hidden_field_tag('id', @outfit_pair.id) %>
+      <button id="vote_first" name="vote_first">This one</button>
+    <% end %>
+    <% form_tag('vote') do %>
+      <%= hidden_field_tag('id', @outfit_pair.id) %>
+      <button id="vote_second" name="vote_second">This one</button>
+    <% end %>
+  </div>
+  <p>First: <%= h @outfit_pair.first_votes %></p>
+  <p>Second: <%= h @outfit_pair.second_votes %></p>
+</div>
