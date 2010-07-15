@@ -14,6 +14,7 @@
       <button id="vote_second" name="vote_second">This one</button>
     <% end %>
   </div>
-  <p>First: <%= h @outfit_pair.first_votes %></p>
-  <p>Second: <%= h @outfit_pair.second_votes %></p>
+  <% if params[:agreed] then %>
+  <p><%= format("%.0f",params[:agreed]) %>% agree with you!</p>
+  <% end %>
 </div>

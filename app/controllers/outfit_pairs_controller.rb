@@ -75,20 +75,34 @@ class OutfitPairsController < ApplicationController
     @outfit_pair = OutfitPair.find(params[:id])
     first = params[:vote_first]
     puts params[:id]
+    
+    if (@outfit_pair.first_votes == nil): @outfit_pair.first_votes = 0 end
+    if (@outfit_pair.second_votes == nil): @outfit_pair.second_votes = 0 end
+    
+    total = @outfit_pair.first_votes + @outfit_pair.second_votes
+
     if (first)
-       if (@outfit_pair.first_votes == nil): @outfit_pair.first_votes = 0 end
+       agreed = @outfit_pair.first_votes
        @outfit_pair.first_votes = @outfit_pair.first_votes + 1
+       vote = 'first'
     else
-       if (@outfit_pair.second_votes == nil): @outfit_pair.second_votes = 0 end
+       agreed = @outfit_pair.second_votes
        @outfit_pair.second_votes = @outfit_pair.second_votes + 1
+       vote = 'second'
     end
 
-      if @outfit_pair.save
-        redirect_to(@outfit_pair)
-      else
-        render :action => "edit"
-      end
+    if (total > 0) then
+        percent_agreed = Float(agreed) / Float(total) * 100
+    else
+	percent_agreed = nil
+    end
+    
 
+    if @outfit_pair.save
+        redirect_to :action => "random", :voted_id => params[:id], :vote => vote, :agreed => percent_agreed
+    else
+        render :action => "edit"
+    end
   end
 
   # DELETE /outfit_pairs/1
