@@ -74,7 +74,11 @@ class OutfitPairsController < ApplicationController
   def vote
     @outfit_pair = OutfitPair.find(params[:id])
     first = params[:vote_first]
-    puts params[:id]
+    
+    voted = Array.new
+    if (cookies[:voted]) then
+        voted = cookies[:voted].split(',')
+    end
     
     if (@outfit_pair.first_votes == nil): @outfit_pair.first_votes = 0 end
     if (@outfit_pair.second_votes == nil): @outfit_pair.second_votes = 0 end
@@ -97,6 +101,8 @@ class OutfitPairsController < ApplicationController
 	percent_agreed = nil
     end
     
+    voted << params[:id]
+    cookies[:voted] = voted.join(',')
 
     if @outfit_pair.save
         redirect_to :action => "random", :voted_id => params[:id], :vote => vote, :agreed => percent_agreed
@@ -119,7 +125,26 @@ class OutfitPairsController < ApplicationController
   
   def random
     pairs = OutfitPair.all
-    @outfit_pair = pairs[rand(pairs.length)]
-    render :action => 'show'
+    unvoted = pairs
+    if cookies[:voted] then
+       puts cookies[:voted]
+       voted = cookies[:voted].split(',')
+       puts voted[0]
+       unvoted = Array.new
+       pairs.each { |pair|
+           puts pair.id
+	   puts voted.include?(pair.id)
+	   if !voted.include?(pair.id.to_s) then
+	      unvoted << pair
+           end
+       }
+    end
+    
+    if unvoted.length > 0 then
+        @outfit_pair = pairs[rand(pairs.length)]
+    	render :action => 'show'
+    else
+	render :template => "outfit_pairs/allgone"
+    end
   end
 end
