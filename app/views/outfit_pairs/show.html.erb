@@ -16,5 +16,7 @@
   </div>
   <% if params[:agreed] then %>
   <p><%= format("%.0f",params[:agreed]) %>% agree with you!</p>
+  <% else %>
+  <p>You are the first to vote!</a>
   <% end %>
 </div>
