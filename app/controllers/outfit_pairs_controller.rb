@@ -141,7 +141,7 @@ class OutfitPairsController < ApplicationController
     end
     
     if unvoted.length > 0 then
-        @outfit_pair = pairs[rand(pairs.length)]
+        @outfit_pair = unvoted[rand(unvoted.length)]
     	render :action => 'show'
     else
 	render :template => "outfit_pairs/allgone"
