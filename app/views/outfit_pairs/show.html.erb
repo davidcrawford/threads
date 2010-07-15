@@ -5,11 +5,11 @@
     <img src="/images/<%=h @outfit_pair.second_image %>" class="outfit" />
   </div>
   <div id="voter">
-    <% form_tag('vote') do %>
+    <% form_tag(:controller => 'outfit_pairs', :action => 'vote') do %>
       <%= hidden_field_tag('id', @outfit_pair.id) %>
       <button id="vote_first" name="vote_first">This one</button>
     <% end %>
-    <% form_tag('vote') do %>
+    <% form_tag(:controller => 'outfit_pairs', :action => 'vote') do %>
       <%= hidden_field_tag('id', @outfit_pair.id) %>
       <button id="vote_second" name="vote_second">This one</button>
     <% end %>
