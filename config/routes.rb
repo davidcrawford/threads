@@ -1,4 +1,5 @@
 ActionController::Routing::Routes.draw do |map|
+  map.root :controller => 'outfit_pairs', :action => 'random'
   map.random 'outfit_pairs/random', :controller => 'outfit_pairs', :action => 'random'
   map.resources :outfit_pairs
 

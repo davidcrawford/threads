@@ -21,7 +21,7 @@ newfiles = Array.new
 app = RestClient::Resource.new 'http://deep-mist-88.heroku.com/outfit_pairs'
 
 Dir.foreach(".") { |file|
-  if file[/\.jpg$/] then
+  if file[/\.(jpg|png)$/] then
     if logged.index(file) == nil then
     logged.each { |existing|
     	puts "adding pair #{file}, #{existing}"
